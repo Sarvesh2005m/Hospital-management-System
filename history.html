@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Appointment History</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Top Bar for Navigation -->
+  <div id="topbar">
+    <button id="homeBtn" onclick="window.location.href='index.html'">Home</button>
+    <h2 id="pageTitle">Appointment History</h2>
+  </div>
+
+  <!-- Appointment List -->
+  <div id="history-list" class="container"></div>
+
+<script>
+  const loggedInUser = localStorage.getItem('loggedInUser');
+  const historyList = document.getElementById('history-list');
+
+  if (!loggedInUser) {
+    historyList.innerHTML = "<p>Please login to view your appointment history.</p>";
+  } else {
+    const allAppointments = JSON.parse(localStorage.getItem('appointments')) || [];
+    const userAppointments = allAppointments.filter(app => app.email === loggedInUser);
+
+    if (!userAppointments.length) {
+      historyList.innerHTML = "<p>No appointments found!</p>";
+    } else {
+      historyList.innerHTML = userAppointments.map((app, i) =>
+        `<div class="appointment-card">
+          <div class="appointment-info">
+            <p><strong>Date:</strong> ${app.date}</p>
+            <p><strong>Department:</strong> ${app.department}</p>
+            <p><strong>Patient:</strong> ${app.name}</p>
+            <p><strong>Mobile:</strong> ${app.mobile}</p>
+          </div>
+          <div class="appointment-actions">
+            <button class="btn" onclick="editAppointment(${i})">Edit</button>
+            <button class="btn cancel-btn" onclick="cancelAppointment(${i})">Cancel</button>
+          </div>
+        </div>`
+      ).join('');
+    }
+  }
+
+  function editAppointment(index) {
+    const appToEdit = JSON.parse(localStorage.getItem('appointments'))[index];
+    localStorage.setItem('editAppointment', JSON.stringify(appToEdit));
+    window.location.href = "edit-appointment.html";  // Redirect to edit page
+  }
+
+  function cancelAppointment(index) {
+    let allAppointments = JSON.parse(localStorage.getItem('appointments'));
+    allAppointments.splice(index, 1);
+    localStorage.setItem('appointments', JSON.stringify(allAppointments));
+    alert("Appointment cancelled!");
+    window.location.reload();
+  }
+</script>
+
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Top Bar Style */
+  #topbar {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  #topbar h2 {
+    margin: 0;
+    font-size: 20px;
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  #homeBtn {
+    position: absolute;
+    left: 20px;
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  #homeBtn:hover {
+    text-decoration: underline;
+  }
+
+  /* Container for centering the appointment history */
+  .container {
+    margin-top: 70px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  /* Appointment Card Style */
+  .appointment-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 15px;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .appointment-info {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .appointment-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+
+  .cancel-btn {
+    background-color: #dc3545;
+  }
+
+  .cancel-btn:hover {
+    background-color: #c82333;
+  }
+</style>
+
+</body>
+</html>

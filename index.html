@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HEALTH+</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Main content -->
+<div id="main-content">
+
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span id="toggle-sidebar-btn">&#9776;</span> <!-- Hamburger icon -->
+      <div class="social-icons">
+        <a href="#"><img src="https://img.icons8.com/ios-filled/20/ffffff/facebook--v1.png"/></a>
+        <a href="#"><img src="https://img.icons8.com/ios-filled/20/ffffff/youtube-play.png"/></a>
+        <a href="#"><img src="https://img.icons8.com/ios-filled/20/ffffff/instagram-new.png"/></a>
+        <a href="#"><img src="https://img.icons8.com/ios-filled/20/ffffff/linkedin.png"/></a>
+      </div>
+    </div>
+  
+    <div class="top-links">
+      <a href="index.html">Home</a>
+      <a href="doctor.html">Doctors</a>
+      <a href="service.html">Services</a>
+      <a href="#" onclick="openModal()">Contact Us</a>
+      <a id="auth-link" href="register.html" title="Login / Register">
+        <img src="download.png" alt="User Icon" />
+      </a>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <div class="sidebar-links">
+      <a href="#" class="active">Home</a>
+      <a href="doctor.html">Doctors</a>
+      <a href="service.html">Services</a>
+      <a href="appointment.html">Book Appointment</a>
+      <a href="history.html">Appointment History</a>
+    </div>
+  </div>
+
+  <!-- Contact Us Modal -->
+  <div id="contactModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Contact Us</h2>
+      <p>📧 Email: <a href="mailto:info@hospital.com">info@hospital.com</a></p>
+      <p>📞 Phone: +91 9876543210</p>
+      <p>🏥 Address: 123 Health St, Pune, Maharashtra</p>
+    </div>
+  </div>
+
+  <!-- Hero section -->
+  <div class="hero">
+   
+    <div class="contact-info">
+      <div class="contact-item">
+        <strong>Health + Lifeline</strong><br />
+        <img src="https://img.icons8.com/ios-filled/16/fa314a/phone.png" />
+        <span>1860-500-1066</span>
+      </div>
+      <div class="contact-item">
+        <strong>EMERGENCY</strong><br />
+        <img src="https://img.icons8.com/ios-filled/16/fa314a/phone.png" />
+        <span>1066</span>
+      </div>
+      <div class="contact-item">
+        <img src="images/icon.png" alt="Health Icon" />
+      </div>
+    </div>
+
+    <div class="hero-left">
+      <img src="images/design1.png" alt="Health Icon" class="hero-small-icon" />
+      <img src="images/design2.png" alt="Health Icon" class="hero-small-icon1" />
+
+      <h1>Your Partner in<br><span>Health and Wellness</span></h1>
+      <p>We are committed to providing you with the best medical and healthcare services to help you live healthier and happier</p>
+      <a href="appointment.html" class="btn" id="book-appointment-btn">BOOK AN APPOINTMENT</a>
+    </div>
+
+    <div class="hero-right">
+      <div class="image-wrapper">
+        <img src="images/doctor.png" alt="Doctor" class="hero-image" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Departments Section -->
+  <section class="departments">
+    <h2>Departments</h2>
+    <div class="department-list">
+      <div class="department-card">
+        <img src="https://img.icons8.com/ios/50/000000/emergency.png"/>
+        <p>Emergency Department</p>
+      </div>
+      <div class="department-card">
+        <img src="https://img.icons8.com/ios/50/000000/baby.png"/>
+        <p>Pediatric Department</p>
+      </div>
+      <div class="department-card">
+        <img src="https://img.icons8.com/ios/50/000000/uterus.png"/>
+        <p>Obstetrics and Gynecology Department</p>
+      </div>
+      <div class="department-card">
+        <img src="https://img.icons8.com/ios/50/000000/like--v1.png"/>
+        <p>Cardiology Department</p>
+      </div>
+      <div class="department-card">
+        <img src="https://img.icons8.com/ios/50/000000/brain.png"/>
+        <p>Neurology Department</p>
+      </div>
+      <div class="department-card">
+        <img src="https://img.icons8.com/ios/50/000000/brainstorm-skill.png"/>
+        <p>Psychiatry Department</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Doctors Section -->
+  <section class="doctors">
+    <h2>Our Dedicated Doctors Team</h2>
+    <div class="doctor-list">
+      <div class="doctor-card">
+        <img src="images/Maran-img.png" alt="Dr. Maran">
+        <h3>Dr. Maran</h3>
+        <p>Cardiologist</p>
+        <a href="#" class="btn" onclick="showDoctorProfile('maran')">View Profile</a>
+      </div>
+      <div class="doctor-card">
+        <img src="images/Suganthi-img.png" alt="Dr. Suganthi">
+        <h3>Dr. Suganthi</h3>
+        <p>Pediatrician</p>
+        <a href="#" class="btn" onclick="showDoctorProfile('suganthi')">View Profile</a>
+      </div>
+      <div class="doctor-card">
+        <img src="images/John-img.png" alt="Dr. JohnDurai">
+        <h3>Dr. JohnDurai</h3>
+        <p>Psychiatrist</p>
+        <a href="#" class="btn" onclick="showDoctorProfile('john')">View Profile</a>
+      </div>
+    </div>
+  </section>
+  <div id="doctorModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeDoctorModal()">&times;</span>
+      <div id="doctorDetails"></div>
+    </div>
+  </div>
+
+
+  <!-- Health Reminder Section -->
+  <section class="outer-area">
+    <section class="health-reminder">
+      <div class="reminder-container">
+        <div class="reminder-text">
+          <h2>Don’t Let Your Health <br>Take a Backseat!</h2>
+          <p>Schedule an appointment with one of our experienced medical professionals today!</p>
+          <a href="appointment.html" class="btn">Book Now</a>
+        </div>
+        <div class="reminder-image">
+          <img src="images/Ellipse 13.png" alt="Doctor Image">
+        </div>
+      </div>
+    </section>
+
+  <!-- Subscribe & Footer Section -->
+  <section class="subscribe-footer">
+    <div class="subscribe-container">
+      <div class="subscribe-left">
+        <h3>Health Medical &<br>Healthcare Center</h3>
+        <h2>Be Our Subscribers</h2>
+        <p>to get the latest news about health from our experts</p>
+        <div class="subscribe-input">
+          <input type="email" id="subscriber-email" placeholder="example@gmail.com">
+          <button id="subscribe-btn" type="button">Submit →</button>
+
+        </div>
+      </div>
+
+      <div class="subscribe-links">
+        <ul>
+          <li>About us</li>
+          <a href="doctor.html">Doctors</a>
+          <li><a href ="service.html">services</a>
+          <li><a href ="appointment.html">Appointments</a>
+        </ul>
+      </div>
+
+      <div class="subscribe-hours">
+        <h4>Opening Hours</h4>
+        <p>Mon-Sat : 6.00 AM – 10.00 PM</p>
+        <p>Sun : 6.00 AM – 4.00 PM</p>
+      </div>
+
+      <div class="subscribe-helpline">
+        <h4>Helplines</h4>
+        <p><strong>EMERGENCY</strong>  <img src="https://img.icons8.com/ios-filled/14/fa314a/phone.png"/> 1066</p>
+        <p><strong>Health + Lifeline</strong> <img src="https://img.icons8.com/ios-filled/14/fa314a/phone.png"/> 1860-500-1066</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© Copyright 2023. Kamalesh J. All Rights Reserved.</p>
+      <div class="footer-icons">
+        <a href="#"><img src="https://img.icons8.com/ios-filled/20/ffffff/facebook--v1.png"/></a>
+        <a href="#"><img src="https://img.icons8.com/ios-filled/20/ffffff/youtube-play.png"/></a>
+        <a href="#"><img src="https://img.icons8.com/ios-filled/20/ffffff/instagram-new.png"/></a>
+        <a href="#"><img src="https://img.icons8.com/ios-filled/20/ffffff/linkedin.png"/></a>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Disclaimer</a>
+        <a href="#"onclick="openModal()">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
