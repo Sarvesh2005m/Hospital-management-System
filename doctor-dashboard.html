@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor Dashboard - HEALTH+</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4faff;
+      color: #333;
+    }
+
+    header {
+      background-color: #0077cc;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    header button {
+      background-color: #005fa3;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .dashboard {
+      padding: 2rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .search-bar {
+      margin-bottom: 2rem;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .patient-card {
+      background-color: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .patient-card h3 {
+      margin: 0 0 0.5rem;
+    }
+
+    .add-patient {
+      margin-top: 2rem;
+      background-color: #ffffff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    .add-patient h2 {
+      margin-top: 0;
+    }
+
+    .add-patient input, .add-patient textarea {
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .add-patient button {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Doctor Dashboard - HEALTH+</h1>
+    <button onclick="logout()">Logout</button>
+  </header>
+
+  <div class="dashboard">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search patients by name..." onkeyup="searchPatients()">
+    </div>
+
+    <div id="patientList">
+      <div class="patient-card">
+        <h3>Ravi Sharma</h3>
+        <p><strong>Health Problem:</strong> High Blood Pressure</p>
+        <p><strong>Prescription:</strong> Amlodipine 5mg once daily</p>
+      </div>
+      <div class="patient-card">
+        <h3>Neha Patil</h3>
+        <p><strong>Health Problem:</strong> Migraine</p>
+        <p><strong>Prescription:</strong> Sumatriptan as needed</p>
+      </div>
+    </div>
+
+    <div class="add-patient">
+      <h2>Add New Patient</h2>
+      <input type="text" id="newName" placeholder="Full Name">
+      <input type="text" id="newProblem" placeholder="Health Problem">
+      <textarea id="newPrescription" placeholder="Prescription"></textarea>
+      <button onclick="addPatient()">Add Patient</button>
+    </div>
+  </div>
+
+  <script>
+    function logout() {
+      alert("Logging out...");
+      window.location.href = "login.html";
+    }
+
+    function searchPatients() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const cards = document.querySelectorAll(".patient-card");
+
+      cards.forEach(card => {
+        const name = card.querySelector("h3").textContent.toLowerCase();
+        card.style.display = name.includes(input) ? "block" : "none";
+      });
+    }
+
+    function addPatient() {
+      const name = document.getElementById("newName").value;
+      const problem = document.getElementById("newProblem").value;
+      const prescription = document.getElementById("newPrescription").value;
+
+      if (!name || !problem || !prescription) {
+        alert("Please fill out all fields.");
+        return;
+      }
+
+      const card = document.createElement("div");
+      card.className = "patient-card";
+      card.innerHTML = `<h3>${name}</h3>
+                        <p><strong>Health Problem:</strong> ${problem}</p>
+                        <p><strong>Prescription:</strong> ${prescription}</p>`;
+
+      document.getElementById("patientList").appendChild(card);
+
+      document.getElementById("newName").value = "";
+      document.getElementById("newProblem").value = "";
+      document.getElementById("newPrescription").value = "";
+    }
+  </script>
+
+</body>
+</html>

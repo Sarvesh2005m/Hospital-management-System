@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Appointment</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div id="topbar">
+    <button id="homeBtn" onclick="window.location.href='index.html'">Home</button>
+    <h2>Edit Appointment</h2>
+  </div>
+
+  <!-- Edit Appointment Form -->
+  <div class="container">
+    <form id="edit-appointment-form">
+      <div class="input-group">
+        <label for="edit-patient-name">Name</label>
+        <input type="text" id="edit-patient-name" required />
+      </div>
+
+      <div class="input-group">
+        <label for="edit-appointment-date">Date</label>
+        <input type="date" id="edit-appointment-date" required />
+      </div>
+
+      <div class="input-group">
+        <label for="edit-appointment-department">Department</label>
+        <select id="edit-appointment-department" required>
+          <option value="Cardiology">Cardiology</option>
+          <option value="Pediatrics">Pediatrics</option>
+          <option value="Neurology">Neurology</option>
+          <option value="Psychiatry">Psychiatry</option>
+          <option value="General">General Checkup</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="edit-appointment-mobile">Mobile</label>
+        <input type="text" id="edit-appointment-mobile" required />
+      </div>
+
+      <button type="submit">Update Appointment</button>
+    </form>
+  </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const appointmentToEdit = JSON.parse(localStorage.getItem('editAppointment'));
+    document.getElementById('edit-patient-name').value = appointmentToEdit.name;
+    document.getElementById('edit-appointment-date').value = appointmentToEdit.date;
+    document.getElementById('edit-appointment-department').value = appointmentToEdit.department;
+    document.getElementById('edit-appointment-mobile').value = appointmentToEdit.mobile;
+
+    document.getElementById('edit-appointment-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const updatedAppointment = {
+        name: document.getElementById('edit-patient-name').value,
+        email: appointmentToEdit.email,  // Email stays the same as it's tied to the user
+        date: document.getElementById('edit-appointment-date').value,
+        department: document.getElementById('edit-appointment-department').value,
+        mobile: document.getElementById('edit-appointment-mobile').value,
+      };
+
+      let allAppointments = JSON.parse(localStorage.getItem('appointments'));
+      const appointmentIndex = allAppointments.findIndex(app => app.email === appointmentToEdit.email && app.date === appointmentToEdit.date);
+      allAppointments[appointmentIndex] = updatedAppointment;
+
+      localStorage.setItem('appointments', JSON.stringify(allAppointments));
+      alert('Appointment updated successfully!');
+      window.location.href = 'history.html'; // Redirect back to history
+    });
+  });
+</script>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+
+  #topbar {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  #homeBtn {
+    position: absolute;
+    left: 20px;
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  #homeBtn:hover {
+    text-decoration: underline;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  .container {
+    margin-top: 70px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+
+  button {
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }

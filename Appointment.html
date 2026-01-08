@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Appointment - HEALTH+</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e8f5e9, #f0f8ff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .top-bar {
+      width: 100%;
+      background: #1a73e8;
+      padding: 14px 24px;
+      color: white;
+      font-weight: 600;
+      text-align: left;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .top-bar a {
+      text-decoration: none;
+      color: white;
+      font-size: 16px;
+      left:52px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      width: 100%;
+      max-width: 450px;
+      margin-top: 80px;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 28px;
+      font-size: 24px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 15px;
+      transition: border 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #1a73e8;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #0f5ec7;
+    }
+
+    #success-msg {
+      margin-top: 15px;
+      color: #28a745;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 480px) {
+      .container {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <a href="index.html">&#8592; Back to Home</a>
+  </div>
+
+  <div class="container">
+    <h2>Book an Appointment</h2>
+    <form id="appointment-form">
+      <div class="input-group">
+        <label for="patient-name">Name</label>
+        <input type="text" id="patient-name" placeholder="Enter your name" required />
+      </div>
+
+      <div class="input-group">
+        <label for="patient-email">Email</label>
+        <input type="email" id="patient-email" placeholder="Enter your email" required />
+      </div>
+
+      <div class="input-group">
+        <label for="appointment-date">Date</label>
+        <input type="date" id="appointment-date" required />
+      </div>
+
+      <div class="input-group">
+        <label for="appointment-department">Department</label>
+        <select id="appointment-department" required>
+          <option value="">Select Department</option>
+          <option value="Cardiology">Cardiology</option>
+          <option value="Pediatrics">Pediatrics</option>
+          <option value="Neurology">Neurology</option>
+          <option value="Psychiatry">Psychiatry</option>
+          <option value="General">General Checkup</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="appointment-Mob">Mobile Number</label>
+        <input type="tel" id="appointment-Mob" placeholder="Enter your mobile number" required />
+      </div>
+
+      <button type="submit">Book Appointment</button>
+      <p id="success-msg"></p>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    emailjs.init("fD03booYnikUwrpRv");
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const loggedInUser = localStorage.getItem('loggedInUser');
+      if (!loggedInUser) {
+        alert("Please login first to book an appointment!");
+        window.location.href = "login.html";
+        return;
+      } else {
+        document.getElementById('patient-email').value = loggedInUser;
+      }
+
+      document.getElementById('appointment-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById('patient-name').value;
+        const email = document.getElementById('patient-email').value;
+        const date = document.getElementById('appointment-date').value;
+        const department = document.getElementById('appointment-department').value;
+        const mobile = document.getElementById('appointment-Mob').value;
+
+        const appointmentId = "APT" + Math.floor(Math.random() * 90000 + 10000);
+
+        const appointment = {
+          name,
+          email,
+          date,
+          department,
+          mobile,
+          status: "Pending",
+          id: appointmentId
+        };
+
+        let allAppointments = JSON.parse(localStorage.getItem('appointments')) || [];
+        allAppointments.push(appointment);
+        localStorage.setItem('appointments', JSON.stringify(allAppointments));
+
+        const templateParams = {
+          name: name,
+          email: email,
+          Appointment_id: appointmentId,
+          doctor: department,
+          date: date,
+          time: "10:00 AM",
+        };
+
+        emailjs.send("service_wpr2e2k", "template_keuvwyb", templateParams)
+          .then(() => {
+            document.getElementById('success-msg').innerText = "Appointment booked! Confirmation email sent ✅";
+            document.getElementById('appointment-form').reset();
+
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 2500);
+          })
+          .catch((error) => {
+            console.error("Error sending email:", error);
+          });
+      });
+    });
+  </script>
+
+</body>
+</html>
